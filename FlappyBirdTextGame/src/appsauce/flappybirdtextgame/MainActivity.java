@@ -11,8 +11,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends Activity {
 	//flaps to keep track of flaps per game. Just cuz.
@@ -28,6 +33,7 @@ public class MainActivity extends Activity {
 	//restart is set to true if the player clicks >NEW GAME
 	boolean restart = false;
 	private SharedPreferences mPrefs;
+	private AdView adView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,17 @@ public class MainActivity extends Activity {
 
 		TextView useCoin = (TextView) findViewById(R.id.useCoin);
 		useCoin.setVisibility(TextView.GONE);
+		
+		adView = new AdView(this);
+		adView.setAdUnitId("ca-app-pub-7649747947968832/4287699503");
+		adView.setAdSize(AdSize.BANNER);
+		LinearLayout layout = (LinearLayout)findViewById(R.id.adView);
+		layout.addView(adView);
+		AdRequest adRequest = new AdRequest.Builder()
+		.addTestDevice("6b0284de")
+		.addTestDevice("c0808a004e5b92f")
+		.build();
+		adView.loadAd(adRequest);
 
 		if (dc > 0) {
 			TextView currentScore = (TextView) findViewById(R.id.dogecoin);
@@ -251,6 +268,27 @@ public class MainActivity extends Activity {
 		Intent i = new Intent(Intent.ACTION_VIEW);
 		i.setData(Uri.parse(url));
 		startActivity(i);
+	}
+	
+	@Override
+	protected void onPause() {
+		adView.pause();
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		adView.resume();
+		mPrefs = getPreferences(MODE_PRIVATE);
+		hs = mPrefs.getInt("hs", 0);
+		dc = mPrefs.getInt("dc", 0);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		adView.destroy();
+		super.onDestroy();
 	}
 
 	public void die() {
