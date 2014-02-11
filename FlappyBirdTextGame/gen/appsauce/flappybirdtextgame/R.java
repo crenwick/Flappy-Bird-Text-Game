@@ -24,11 +24,13 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int currentScore=0x7f080002;
+        public static final int currentScore=0x7f080003;
+        public static final int dogecoin=0x7f080005;
         public static final int flap=0x7f080001;
         public static final int gameText=0x7f080000;
-        public static final int highScore=0x7f080003;
-        public static final int more_apps=0x7f080004;
+        public static final int highScore=0x7f080004;
+        public static final int more_apps=0x7f080006;
+        public static final int useCoin=0x7f080002;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
