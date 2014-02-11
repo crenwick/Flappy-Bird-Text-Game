@@ -15,11 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	//flaps to keep track of flaps per game. Just cuz.
 	int flaps;
+	//gFlaps keep track of flaps between pipes
 	int gFlaps;
+	//points per round
 	int points;
+	//hs is the highscore
 	int hs;
+	//dc is the player's dogecoin
 	int dc;
+	//restart is set to true if the player clicks >NEW GAME
 	boolean restart = false;
 	private SharedPreferences mPrefs;
 
@@ -51,7 +57,7 @@ public class MainActivity extends Activity {
 			public void onClick(View view) {
 				TextView useCoin = (TextView) findViewById(R.id.useCoin);
 				useCoin.setVisibility(TextView.GONE);
-				
+
 				if (restart == true) {
 					restart = false;
 					TextView button = (TextView) findViewById(R.id.flap);
@@ -88,7 +94,7 @@ public class MainActivity extends Activity {
 		} else {
 			TextView gameText = (TextView) findViewById(R.id.gameText);
 			gameText.setText("As the pipes grow closer, you flap hard, trying to fit in a gap.");
-			
+
 			if (dc > 0) {
 				TextView useCoin = (TextView) findViewById(R.id.useCoin);
 				useCoin.setVisibility(TextView.VISIBLE);
@@ -113,14 +119,12 @@ public class MainActivity extends Activity {
 						editor.putInt("dc", dc);
 						editor.commit();
 						payedToll();
-						
+
 					}
 
 				});
 			}
 			flaps++;
-			
-			//
 		}
 	}
 
@@ -163,7 +167,7 @@ public class MainActivity extends Activity {
 				gFlaps = 0;
 				points = 0;
 				TextView button = (TextView) findViewById(R.id.flap);
-				button.setText("NEW GAME");
+				button.setText(">NEW GAME");
 				restart = true;
 			} else {
 				double r = Math.floor((Math.random() * 10) + 1);
